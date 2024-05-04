@@ -11,7 +11,11 @@
         android:id="@+id/thirdButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Go to second activity"
+        android:text="Segunda actividad"
+        android:textColor="#ffffff"
+        android:backgroundTint="#2196F3"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
