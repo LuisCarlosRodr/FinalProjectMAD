@@ -30,4 +30,15 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/osmButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Open Street Map Actividad"
+        android:textColor="#ffffff"
+        android:backgroundTint="#2196F3"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@id/mainButton"
+        app:layout_constraintTop_toBottomOf="@id/mainButton" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
