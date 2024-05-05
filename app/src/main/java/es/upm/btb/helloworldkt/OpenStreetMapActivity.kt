@@ -142,7 +142,7 @@ class OpenStreetMapActivity : AppCompatActivity() {
 
         val route = Polyline()
         route.setPoints(locationsCoords)
-        route.color = ContextCompat.getColor(this, R.color.purple_200)
+        route.color = ContextCompat.getColor(this, R.color.purple_700)
         mapView.overlays.add(route)
 
         for (location in locationsCoords) {
