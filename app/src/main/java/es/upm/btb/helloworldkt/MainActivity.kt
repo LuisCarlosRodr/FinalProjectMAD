@@ -13,6 +13,10 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
 import android.widget.Button
+import android.widget.Toast
+import android.widget.EditText
+import androidx.appcompat.app.AlertDialog
+import java.io.File
 
 class MainActivity : AppCompatActivity(), LocationListener {
     private val TAG = "MainActivityRegister"
@@ -25,6 +29,24 @@ class MainActivity : AppCompatActivity(), LocationListener {
         setContentView(R.layout.activity_main)
 
         val buttonOsm: Button = findViewById(R.id.osmButton)
+        val buttonNext: Button = findViewById(R.id.mainButton)
+        // Check if the user identifier is already saved
+        val userIdentifier = getUserIdentifier()
+        if (userIdentifier == null) {
+            // If not, ask for it
+            askForUserIdentifier()
+        } else {
+            // If yes, use it or show it
+            Toast.makeText(this, "User ID: $userIdentifier", Toast.LENGTH_LONG).show()
+        }
+
+        buttonNext.setOnClickListener {
+            val intent = Intent(this, SecondActivity::class.java)
+            val bundle = Bundle()
+            bundle.putParcelable("location", latestLocation)
+            intent.putExtra("locationBundle", bundle)
+            startActivity(intent)
+        }
 
         buttonOsm.setOnClickListener {
             if (latestLocation != null) {
@@ -37,6 +59,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
                 Log.e(TAG, "Location not set yet.")
             }
         }
+
 
         locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
@@ -74,11 +97,52 @@ class MainActivity : AppCompatActivity(), LocationListener {
         }
     }
 
+    private fun askForUserIdentifier() {
+        val input = EditText(this)
+        AlertDialog.Builder(this)
+            .setTitle("Insert your user identifier: ")
+            .setIcon(R.mipmap.ic_launcher)
+            .setView(input)
+            .setPositiveButton("Save") { dialog, which ->
+                val userInput = input.text.toString()
+                if (userInput.isNotBlank()) {
+                    saveUserIdentifier(userInput)
+                    Toast.makeText(this, "El user ID ha sido guardado: $userInput", Toast.LENGTH_LONG).show()
+                } else {
+                    Toast.makeText(this, "El user ID no puede estar en blanco", Toast.LENGTH_LONG).show()
+                }
+            }
+            .setNegativeButton("Cancelar", null)
+            .show()
+    }
+
+    private fun saveUserIdentifier(userIdentifier: String) {
+        val sharedPreferences = this.getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
+        sharedPreferences.edit().apply {
+            putString("userIdentifier", userIdentifier)
+            apply()
+        }
+    }
+    private fun getUserIdentifier(): String? {
+        val sharedPreferences = this.getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
+        return sharedPreferences.getString("userIdentifier", null)
+    }
+
     override fun onLocationChanged(location: Location) {
         latestLocation = location
         val textView: TextView = findViewById(R.id.mainTextView)
-        textView.text = "Latitude: ${location.latitude}, Longitude: ${location.longitude}"
+        // We define a toast
+        Toast.makeText(this,"Coordinates update! [${location.latitude}][${location.longitude}]", Toast.LENGTH_LONG).show()
+        textView.text = "Latitud: ${location.latitude}, Longitud: ${location.longitude}, UserId: [${getUserIdentifier()}]"
         Log.d(TAG, "onLocationChanged: Latitude: ${location.latitude}, Longitude: ${location.longitude}")
+        saveCoordinatesToFile(location.latitude, location.longitude)
+    }
+
+    private fun saveCoordinatesToFile(latitude: Double, longitude: Double) {
+        val fileName = "gps_coordinates.csv"
+        val file = File(filesDir, fileName)
+        val timestamp = System.currentTimeMillis()
+        file.appendText("$timestamp;$latitude;$longitude\n")
     }
 
     override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
