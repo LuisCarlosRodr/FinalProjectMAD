@@ -1,27 +1,24 @@
 package es.upm.btb.helloworldkt
 
+import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.widget.Button
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.ArrayAdapter
+import androidx.appcompat.app.AppCompatActivity
+import android.widget.ListView
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import es.upm.btb.helloworldkt.MainActivity
+import es.upm.btb.helloworldkt.OpenStreetMapActivity
+import es.upm.btb.helloworldkt.R
+import es.upm.btb.helloworldkt.SecondActivity
 
-class ThirdActivity : AppCompatActivity() {
-    private val TAG = "ThirdActivityRegister"
+class SettingsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_third)
+        setContentView(R.layout.activity_settings)
 
-        // Toast adicional para la tercera actividad
-        Toast.makeText(this, "Has abierto la tercera actividad", Toast.LENGTH_SHORT).show()
-
-        Log.d(TAG, "Register. The third activity has being created.");
-
-
+        // ButtomNavigationMenu
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
         navView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
@@ -45,16 +42,17 @@ class ThirdActivity : AppCompatActivity() {
         }
 
 
-        val latitude = intent.getStringExtra("latitude")
-        val longitude = intent.getStringExtra("longitude")
 
-        Log.d(TAG, "Latitude: $latitude, Longitude: $longitude")
+        val listView: ListView = findViewById(R.id.lvPreferences)
+        val sharedPreferences = getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
+        val allEntries = sharedPreferences.all
 
-        // Find the TextView and set the coordinates
-        val coordinatesTextView: TextView = findViewById(R.id.coordinatesTextView)
-        coordinatesTextView.text = "Latitude: $latitude, Longitude: $longitude"
+        val listItems = ArrayList<String>()
+        for ((key, value) in allEntries) {
+            listItems.add("$key: $value")
+        }
 
+        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, listItems)
+        listView.adapter = adapter
     }
-
-
 }

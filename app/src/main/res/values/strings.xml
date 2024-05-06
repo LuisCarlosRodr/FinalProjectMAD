@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">GPSNow</string>
+    <string name="title_home">Inicio</string>
+    <string name="title_map">Mapa</string>
+    <string name="title_list">Listado</string>
+    <string name="title_config">Opciones</string>
 </resources>
