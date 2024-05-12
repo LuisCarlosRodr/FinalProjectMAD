@@ -52,7 +52,7 @@ class ThirdActivity : AppCompatActivity() {
 
         // Find the TextView and set the coordinates
         val coordinatesTextView: TextView = findViewById(R.id.coordinatesTextView)
-        coordinatesTextView.text = "Latitude: $latitude, Longitude: $longitude"
+        coordinatesTextView.text = "Latitud: $latitude, Longitud: $longitude"
 
     }
 
