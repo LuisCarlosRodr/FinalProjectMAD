@@ -69,17 +69,11 @@ class ThirdActivity : AppCompatActivity() {
             }
         }
 
-
-        val latitude = intent.getStringExtra("latitude")
-        val longitude = intent.getStringExtra("longitude")
-
-
-
-        Log.d(TAG, "Latitude: $latitude, Longitude: $longitude")
+        Log.d(TAG, "Latitude: $latitud, Longitude: $longitud")
 
         // Find the TextView and set the coordinates
         val coordinatesTextView: TextView = findViewById(R.id.coordinatesTextView)
-        coordinatesTextView.text = "Latitud: $latitude, Longitud: $longitude"
+        coordinatesTextView.text = "Latitud: $latitud, Longitud: $longitud"
         val deleteButton: Button = findViewById(R.id.deleteButton)
         deleteButton.setOnClickListener {
             AlertDialog.Builder(this)
