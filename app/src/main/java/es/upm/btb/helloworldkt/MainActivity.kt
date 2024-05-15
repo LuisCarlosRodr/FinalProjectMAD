@@ -18,14 +18,21 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.io.File
+import androidx.room.Room
+import es.upm.btb.helloworldkt.persistence.room.AppDatabase
+import es.upm.btb.helloworldkt.persistence.room.LocationEntity
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity(), LocationListener {
     private val TAG = "MainActivityRegister"
     private lateinit var locationManager: LocationManager
     var latestLocation: Location?= null
     private val locationPermissionCode = 2
+    lateinit var database: AppDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -97,6 +104,10 @@ class MainActivity : AppCompatActivity(), LocationListener {
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 5f, this)
             Log.i(TAG, "Location updates requested successfully.")
         }
+        // Room database init
+        database=Room.databaseBuilder(applicationContext, AppDatabase::class.java, "coordinates").build()
+
+
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -150,6 +161,17 @@ class MainActivity : AppCompatActivity(), LocationListener {
         textView.text = "Latitud: ${location.latitude}, Longitud: ${location.longitude}, UserId: [${getUserIdentifier()}]"
         Log.d(TAG, "onLocationChanged: Latitude: ${location.latitude}, Longitude: ${location.longitude}")
         saveCoordinatesToFile(location.latitude, location.longitude)
+
+        // save coordinates to room databse
+        val newLocation = LocationEntity(
+            latitude = location.latitude,
+            longitude = location.longitude,
+            timestamp = System.currentTimeMillis()
+        )
+        lifecycleScope.launch(Dispatchers.IO) {
+            database.locationDao().insertLocation(newLocation)
+        }
+
     }
 
     private fun saveCoordinatesToFile(latitude: Double, longitude: Double) {

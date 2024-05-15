@@ -11,15 +11,23 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
+import androidx.room.Room
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import es.upm.btb.helloworldkt.persistence.room.AppDatabase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.IOException
 import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
-import android.widget.Toast
+import java.util.*
 
 class SecondActivity : AppCompatActivity() {
     private val TAG = "SecondActivityRegister"
+    private lateinit var database: AppDatabase
+    private lateinit var adapter: CoordinatesAdapter
+    private lateinit var listView: ListView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,7 +36,7 @@ class SecondActivity : AppCompatActivity() {
         // Toast para la segunda actividad
         Toast.makeText(this, "Has abierto la segunda actividad", Toast.LENGTH_SHORT).show()
 
-        Log.d(TAG, "Register. The second activity has being created.");
+        Log.d(TAG, "Register. The second activity has being created.")
 
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
         navView.setOnNavigationItemSelectedListener { item ->
@@ -52,18 +60,30 @@ class SecondActivity : AppCompatActivity() {
             }
         }
 
-
         // Inflate heading and add to ListView
-        val listView: ListView = findViewById(R.id.lvCoordinates)
+        listView = findViewById(R.id.lvCoordinates)
         val headerView = layoutInflater.inflate(R.layout.listview_header, listView, false)
         listView.addHeaderView(headerView, null, false)
 
-        // Create adapter of coordiantes. See class below
-        val adapter = CoordinatesAdapter(this, readFileContents())
+        // Init adapter
+        adapter = CoordinatesAdapter(this, mutableListOf())
         listView.adapter = adapter
+
+        // Init database
+        database = Room.databaseBuilder(applicationContext, AppDatabase::class.java, "coordinates").build()
     }
 
-    private class CoordinatesAdapter(context: Context, private val coordinatesList: List<List<String>>) :
+    override fun onResume() {
+        super.onResume()
+
+        lifecycleScope.launch(Dispatchers.IO) {
+            val itemCount = database.locationDao().getCount()
+            Log.d(TAG, "Number of items in database $itemCount.")
+            loadCoordinatesFromDatabase(adapter)
+        }
+    }
+
+    private class CoordinatesAdapter(context: Context, private val coordinatesList: MutableList<List<String>>) :
         ArrayAdapter<List<String>>(context, R.layout.listview_item, coordinatesList) {
 
         private val inflater: LayoutInflater = LayoutInflater.from(context)
@@ -83,29 +103,49 @@ class SecondActivity : AppCompatActivity() {
 
                 view.setOnClickListener {
                     val intent = Intent(context, ThirdActivity::class.java).apply {
-                        putExtra("latitude", item[1])
-                        putExtra("longitude", item[2])
+                        putExtra("timestamp", item[0].toLong())
+                        putExtra("latitude", item[1].toDouble())
+                        putExtra("longitude", item[2].toDouble())
                     }
                     context.startActivity(intent)
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
-                Log.e("CoordinatesAdapter", "getView: Exception parsing coordinates.");
+                Log.e("CoordinatesAdapter", "getView: Exception parsing coordinates.")
             }
             return view
-
-        }
-            private fun formatTimestamp(timestamp: Long): String {
-                val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
-                return formatter.format(Date(timestamp))
-            }
-
-            private fun formatCoordinate(value: Double): String {
-                return String.format("%.6f", value)
-            }
         }
 
-    private fun readFileContents(): List<List<String>> {
+        private fun formatTimestamp(timestamp: Long): String {
+            val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+            return formatter.format(Date(timestamp))
+        }
+
+        private fun formatCoordinate(value: Double): String {
+            return String.format("%.6f", value)
+        }
+
+        fun updateData(newData: MutableList<List<String>>) {
+            coordinatesList.clear()
+            coordinatesList.addAll(newData)
+            notifyDataSetChanged()
+        }
+    }
+
+    private fun loadCoordinatesFromDatabase(adapter: CoordinatesAdapter) {
+        lifecycleScope.launch(Dispatchers.IO) {
+            val coordinatesList = database.locationDao().getAllLocations()
+            val formattedList = coordinatesList.map {
+                listOf(it.timestamp.toString(), it.latitude.toString(), it.longitude.toString())
+            }
+            withContext(Dispatchers.Main) {
+                adapter.updateData(formattedList.toMutableList())
+            }
+            Log.d("CoordinatesAdapter", "Number of items in database ${database.locationDao().getCount()}.")
+        }
+    }
+
+    fun readFileContents(): List<List<String>> {
         val fileName = "gps_coordinates.csv"
         return try {
             openFileInput(fileName).bufferedReader().useLines { lines ->
@@ -115,5 +155,4 @@ class SecondActivity : AppCompatActivity() {
             listOf(listOf("Error reading file: ${e.message}"))
         }
     }
-
 }
