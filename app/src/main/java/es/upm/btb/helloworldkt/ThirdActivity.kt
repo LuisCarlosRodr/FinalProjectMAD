@@ -51,8 +51,8 @@ class ThirdActivity : AppCompatActivity() {
 
     // Get coordinates for selected item. Set default ones if not obtained.
         val timestamp = intent.getLongExtra("timestamp", 0)
-        val latitud = intent.getDoubleExtra("latitude", 40.475172)
-        val longitud = intent.getDoubleExtra("longitude", -3.461757)
+        val latitud = intent.getDoubleExtra("latitude", 40.389893)
+        val longitud = intent.getDoubleExtra("longitude", -3.627748)
 
         // Shared prefs. Check if the user identifier is already saved
         val userIdentifier = getUserIdentifier()
@@ -104,23 +104,24 @@ class ThirdActivity : AppCompatActivity() {
                             finish()
                         }
                     }
+                    Toast.makeText(this, "Has borrado un dato de la lista", Toast.LENGTH_SHORT).show()
                 }
                 .setNegativeButton("No", null)
                 .show()
         }
-        // Inicializar Retrofit
-        initRetrofit()
 
+
+        initRetrofit()
         // Configurar RecyclerView
         val recyclerView: RecyclerView = findViewById(R.id.recyclerViewWeather)
         recyclerView.layoutManager = LinearLayoutManager(this)
         weatherAdapter = WeatherAdapter(emptyList())
         recyclerView.adapter = weatherAdapter
 
-        // Solicitar datos meteorológicos (usar tus propias coordenadas y API key)
-        val latitude = 40.4675
-        val longitude = -3.4581
-        val apiKey = "your_api_key_here" // Reemplaza con tu API key de OpenWeatherMap
+
+        val latitude = latitud
+        val longitude = longitud
+        val apiKey = "cae696030dc7236f1beb504056a846eb"
         requestWeatherData(latitude, longitude, apiKey)
 
 
