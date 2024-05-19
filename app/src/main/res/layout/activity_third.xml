@@ -26,6 +26,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
 
+
     <Button
         android:id="@+id/deleteButton"
         android:layout_width="wrap_content"
@@ -34,6 +35,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/nav_view"/>
+
+    <EditText
+        android:id="@+id/editTextReport"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Report name"
+        app:layout_constraintTop_toTopOf="@id/deleteButton"
+        app:layout_constraintBottom_toBottomOf="@id/deleteButton"
+        app:layout_constraintStart_toEndOf="@id/deleteButton"
+        app:layout_constraintEnd_toStartOf="@id/addReportButton"/>
+    <Button
+        android:id="@+id/addReportButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Report"
+        app:layout_constraintTop_toTopOf="@id/editTextReport"
+        app:layout_constraintBottom_toBottomOf="@id/editTextReport"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/editTextReport"/>
+
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_view"

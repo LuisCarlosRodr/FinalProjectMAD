@@ -4,4 +4,8 @@
     <string name="title_map">Mapa</string>
     <string name="title_list">Listado</string>
     <string name="title_config">Opciones</string>
+    <string name="signed_in">Signed in!</string>
+    <string name="signed_out">Signed out!</string>
+    <string name="signed_cancelled">Signed in cancelled</string>
+
 </resources>

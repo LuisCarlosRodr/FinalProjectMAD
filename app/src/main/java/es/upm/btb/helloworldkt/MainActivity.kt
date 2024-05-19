@@ -1,6 +1,7 @@
 package es.upm.btb.helloworldkt
 
 import android.Manifest
+import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
@@ -26,6 +27,9 @@ import es.upm.btb.helloworldkt.persistence.room.AppDatabase
 import es.upm.btb.helloworldkt.persistence.room.LocationEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import com.firebase.ui.auth.AuthUI
+import com.firebase.ui.auth.IdpResponse
+import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity(), LocationListener {
     private val TAG = "MainActivityRegister"
@@ -33,6 +37,10 @@ class MainActivity : AppCompatActivity(), LocationListener {
     var latestLocation: Location?= null
     private val locationPermissionCode = 2
     lateinit var database: AppDatabase
+    // companion is the same than an static object in java
+    companion object {
+        private const val RC_SIGN_IN = 123
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -106,6 +114,8 @@ class MainActivity : AppCompatActivity(), LocationListener {
         }
         // Room database init
         database=Room.databaseBuilder(applicationContext, AppDatabase::class.java, "coordinates").build()
+        // Init authentication flow
+        launchSignInFlow()
 
 
     }
@@ -192,6 +202,10 @@ class MainActivity : AppCompatActivity(), LocationListener {
                 startActivity(Intent(this, SettingsActivity::class.java))
                 true
             }
+            R.id.action_logout -> {
+                logout()
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -206,5 +220,59 @@ class MainActivity : AppCompatActivity(), LocationListener {
 
     override fun onProviderDisabled(provider: String) {
         Log.w(TAG, "onProviderDisabled: Provider $provider disabled.")
+    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == RC_SIGN_IN) {
+            val response = IdpResponse.fromResultIntent(data)
+            if (resultCode == Activity.RESULT_OK) {
+                // user login succeeded
+                val user = FirebaseAuth.getInstance().currentUser
+                Toast.makeText(this, R.string.signed_in, Toast.LENGTH_SHORT).show();
+                Log.i(TAG, "onActivityResult " + getString(R.string.signed_in));
+            } else {
+                // user login failed
+                Log.e(TAG, "Error starting auth session: ${response?.error?.errorCode}")
+                Toast.makeText(this, R.string.signed_cancelled, Toast.LENGTH_SHORT).show();
+                finish()
+            }
+        }
+    }
+    private fun launchSignInFlow() {
+        val providers = arrayListOf(
+            AuthUI.IdpConfig.EmailBuilder().build(),
+            AuthUI.IdpConfig.GoogleBuilder().build()
+        )
+        startActivityForResult(
+            AuthUI.getInstance()
+                .createSignInIntentBuilder()
+                .setAvailableProviders(providers)
+                .build(),
+            RC_SIGN_IN
+        )
+    }
+    private fun logout() {
+        AuthUI.getInstance()
+            .signOut(this)
+            .addOnCompleteListener {
+                // Restart activity after finishing
+                val intent = Intent(this, MainActivity::class.java)
+                // Clean back stack so that user cannot retake activity after logout
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+                finish()
+            }
+    }
+    private fun updateUIWithUsername() {
+        val user = FirebaseAuth.getInstance().currentUser
+        val userNameTextView: TextView = findViewById(R.id.userNameTextView)
+        user?.let {
+            val name = user.displayName ?: "No Name"
+            userNameTextView.text = "\uD83E\uDD35\u200D♂\uFE0F " + name
+        }
+    }
+    override fun onResume() {
+        super.onResume()
+        updateUIWithUsername()
     }
 }
