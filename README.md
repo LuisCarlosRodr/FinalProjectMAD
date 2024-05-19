@@ -10,14 +10,8 @@
 
 The GPSNow app is a location tracking tool that allows users to record and share their real-time geographic coordinates. With an intuitive interface and built-in security features, users can view their current location, track routes... Additionally, the app offers incredible features such as user authentication, profile management, and customizable settings for a complete and secure user experience.
 
-## Screenshots and navigation
+## Demo video
 
-- **Link**: [Screenshots](https://upm365-my.sharepoint.com/personal/luiscarlos_rodriguez_escudero_alumnos_upm_es/_layouts/15/stream.aspx?id=%2Fpersonal%2Fluiscarlos%5Frodriguez%5Fescudero%5Falumnos%5Fupm%5Fes%2FDocuments%2FRecording%2D20240325%5F152233%2Ewebm&nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0&ga=1&referrer=StreamWebApp%2EWeb&referrerScenario=AddressBarCopied%2Eview)
-
-
-## Demo Video
-
-- **Link**: [Demo Video](https://upm365.sharepoint.com/sites/UPMMobileApp/SitePages/Tracking.aspx)
 ## Features
 
 ### Functional features of the GPSNow app:
