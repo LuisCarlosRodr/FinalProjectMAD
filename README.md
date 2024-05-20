@@ -12,8 +12,15 @@ The GPSNow app is a location tracking tool that allows users to record and share
 
 ## Demo video
 
+- **Video**: [Link]([https://youtu.be/wYX3ZLFa3rk])
+  
 ## Features
-
+- Realtime database
+- Authentication
+- Firebase UI
+- External webservice
+- Retrofit
+  
 ### Functional features of the GPSNow app:
 
 - Search for nearby food sites and points of interest.
