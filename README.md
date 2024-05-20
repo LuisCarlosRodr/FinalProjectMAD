@@ -4,7 +4,7 @@
 
 - **Github Repository**: [Link](https://github.com/LuisCarlosRodr/FinalProjectMAD)
 - **Releases**: [Link](https://github.com/LuisCarlosRodr/FinalProjectMAD/releases)
-- **Workspace**: [Link](https://upm365.sharepoint.com/sites/UPMMobileApp/SitePages/Tracking.aspxhttps://upm365.sharepoint.com/sites/UPMMobileApp/SitePages/Tracking.aspx)
+- **Workspace**: [Link](https://upm365.sharepoint.com/sites/UPMMobileApp/SitePages/Tracking.aspx)
 
 ## Description
 
