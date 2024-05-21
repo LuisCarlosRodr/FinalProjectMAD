@@ -2,26 +2,26 @@
 
 ## Workspace
 
-- **Github Repository**: [Link](https://github.com/LuisCarlosRodr/FinalProjectMAD)
+- **GitHub Repository**: [Link](https://github.com/LuisCarlosRodr/FinalProjectMAD)
 - **Releases**: [Link](https://github.com/LuisCarlosRodr/FinalProjectMAD/releases)
 - **Workspace**: [Link](https://upm365.sharepoint.com/sites/UPMMobileApp/SitePages/Tracking.aspx)
 
 ## Description
 
-The GPSNow app is a location tracking tool that allows users to record and share their real-time geographic coordinates. With an intuitive interface and built-in security features, users can view their current location, track routes... Additionally, the app offers incredible features such as user authentication, profile management, and customizable settings for a complete and secure user experience.
+The GPSNow app is a location tracking tool that allows users to record and share their real-time geographic coordinates. With an intuitive interface and built-in security features, users can view their current location, track routes, and much more. Additionally, the app offers features such as user authentication, profile management, and customizable settings for a complete and secure user experience.
 
-## Demo video
+## Demo Video
 
 - **Video**: [Link](https://youtu.be/wYX3ZLFa3rk)
-  
+
 ## Features
-- Realtime database
+- Real-time database
 - Authentication
 - Firebase UI
-- External webservice
+- External web service
 - Retrofit
-  
-### Functional features of the GPSNow app:
+
+### Functional Features
 
 - Search for nearby food sites and points of interest.
 - Filter routes.
@@ -29,7 +29,7 @@ The GPSNow app is a location tracking tool that allows users to record and share
 - Real-time location tracking and updates.
 - Save favorite locations and routes for future use.
 
-### Technical features of the GPSNow app:
+### Technical Features
 
 - Persistence of user preferences using SharedPreferences.
 - Data storage and retrieval using Room database.
@@ -41,6 +41,10 @@ The GPSNow app is a location tracking tool that allows users to record and share
 - Implementation of Toolbar for app navigation and menu options.
 - Image loading and caching using Glide library for smooth user experience.
 - Sensor integration for capturing GPS coordinates and orientation data.
+
+## Screenshots and Navigation
+
+
 
 ## How to Use
 
@@ -73,9 +77,3 @@ To get started with the GPSNow app as a user, follow these simple instructions:
    - If you encounter any issues, have suggestions for improvement, or want to share your feedback, navigate to the app's settings or help section to find information on how to contact the developer or provide feedback.
 
 By following these steps, you can easily get started with using the GPSNow app and make the most out of its features for your navigation needs.
-
-## Participants
-
-List of MAD developers:
-- LUIS CARLOS RODRIGUEZ ESCUDERO (luiscarlos.rodriguez.escudero@alumnos.upm.es)
-- JAVIER DIEZ TEJEDA (javier.diez.tejeda@alumnos.upm.es)
