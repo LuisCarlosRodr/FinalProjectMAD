@@ -43,6 +43,16 @@ The GPSNow app is a location tracking tool that allows users to record and share
 
 ## Screenshots and Navigation
 
+![captura1](https://github.com/LuisCarlosRodr/FinalProjectMAD/assets/159927844/dd935334-d560-42c9-b516-905a3ebc0dfd)
+![captura8](https://github.com/LuisCarlosRodr/FinalProjectMAD/assets/159927844/1b9b3fc5-cfea-40b1-b3f3-c4309567d5ea)
+![captura2](https://github.com/LuisCarlosRodr/FinalProjectMAD/assets/159927844/1a1f2342-a266-45f4-8d27-4f05438b4006)
+![captura3](https://github.com/LuisCarlosRodr/FinalProjectMAD/assets/159927844/5732e8d8-fd94-42b9-bc00-e451fc2ccad3)
+![captura4](https://github.com/LuisCarlosRodr/FinalProjectMAD/assets/159927844/e2fe59bb-abe4-42f6-8f14-f9af57c739ed)
+![captura5](https://github.com/LuisCarlosRodr/FinalProjectMAD/assets/159927844/dff68be1-9ce8-47d6-9600-227c7590103e)
+![captura 6](https://github.com/LuisCarlosRodr/FinalProjectMAD/assets/159927844/ac6e3264-94b4-4686-a901-ae52496749b9)
+![captura7](https://github.com/LuisCarlosRodr/FinalProjectMAD/assets/159927844/87e4753f-05fa-418d-81b2-64551206e009)
+
+
 
 
 ## How to Use
