@@ -35,7 +35,6 @@ The GPSNow app is a location tracking tool that allows users to record and share
 - Data storage and retrieval using Room database.
 - Integration with Firebase Realtime Database for storing and syncing user data.
 - Firebase Authentication for secure user login and registration.
-- README file detailing app usage and instructions, licensed under GPL-3.0.
 - Integration with Google Maps for mapping and navigation.
 - Utilization of RESTful APIs for accessing external data sources, such as OpenWeatherMap API for weather information.
 - Implementation of Toolbar for app navigation and menu options.
